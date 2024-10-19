@@ -6,7 +6,7 @@ export const getAllProducts = async () => {
 
 export const seedInitialProducts = async () => {
     const products = [
-        { title: "Test 1", image: "image1.jpg", price: 10, stock: 100 },
+        { title: "Dell Laptop", image: "https://images.app.goo.gl/E4SLvCJN8UmgcgeZ9", price: 2100, stock: 10 },
   ]
 
 
