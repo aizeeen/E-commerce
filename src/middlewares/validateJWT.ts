@@ -1,12 +1,11 @@
-import { Request, Response, NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
 import jwt from 'jsonwebtoken';
 import userModel from "../models/userModel";
+import { ExtendRequest } from "../types/extendedRequest";
 
-interface ExtendRequest extends Request {
-    user?: any;
-}
 
-const validateJWT = ( req: ExtendRequest, res: Response, next: NextFunction ) => {
+
+const validateJWT = (req: ExtendRequest, res: Response, next: NextFunction ) => {
     const authorizationHeader = req.get('authorization')
 
     if (!authorizationHeader){
@@ -41,8 +40,8 @@ const validateJWT = ( req: ExtendRequest, res: Response, next: NextFunction ) =>
         const user = await userModel.findOne({ email: userPayload.email });
         req.user = user;
         next();
-    })
-}
+    });
+};
 
 
 export default validateJWT;
