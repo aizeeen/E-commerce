@@ -27,7 +27,7 @@ const cartItemSchema = new Schema<ICartItem>({
 const cartSchema = new Schema<ICart>({
     userId: { type: Schema.Types.ObjectId, ref: "User", required: true},
     items: [cartItemSchema],
-    totalAmount: { type: Number, required: true, default: 0},
+    totalAmount: { type: Number, required: true},
     status: { type: String, enum: CartStatusEnum, default: "active" },
     })
 

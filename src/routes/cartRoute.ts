@@ -23,6 +23,7 @@ router.post('/items',
         const { productId, quantity } = req.body;
        const response = await addItemToCart ({ userId, productId, quantity });
        res.status(response.statusCode).send(response.data);
-    });
+    },
+);
  
 export default router; 

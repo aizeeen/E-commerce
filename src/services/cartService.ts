@@ -33,12 +33,12 @@ interface addItemToCart {
 export const addItemToCart = async ({ 
     productId,
      quantity,
-      userId
+      userId,
      }: addItemToCart) => {
     const cart = await getActiveCartForUser({ userId }); 
 
     //does the item exist in the cart 
-    const existsInCart = cart.items.find((p) => p.product === productId)
+    const existsInCart = cart.items.find((p) => p.product === productId);
 
     if (existsInCart) {
         return { data : "item already in cart", statusCode: 400}
@@ -50,9 +50,11 @@ export const addItemToCart = async ({
     if (!product) {
         return { data: "product not found", statusCode: 400 }
     }
-    cart.items.push ({ product: productId,
+    cart.items.push({
+         product: productId,
          unitPrice: product.price,
-         quantity })
+         quantity 
+        });
 const updatedCart = await cart.save();
 
 return { data: updatedCart, statusCode: 200 };
