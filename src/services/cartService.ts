@@ -38,7 +38,7 @@ export const addItemToCart = async ({
     const cart = await getActiveCartForUser({ userId }); 
 
     //does the item exist in the cart 
-    const existsInCart = cart.items.find((p) => p.product === productId);
+    const existsInCart = cart.items.find((p) => p.product.toString() === productId);
 
     if (existsInCart) {
         return { data : "item already in cart", statusCode: 400}
@@ -50,12 +50,20 @@ export const addItemToCart = async ({
     if (!product) {
         return { data: "product not found", statusCode: 400 }
     }
+if (product.stock < quantity){
+    return { data: "low stock for item", statusCode: 400 }
+}
+
     cart.items.push({
          product: productId,
          unitPrice: product.price,
          quantity 
         });
+//update the total amount for the catrt
+cart.totalAmount += product.price * quantity;
+
+
 const updatedCart = await cart.save();
 
 return { data: updatedCart, statusCode: 200 };
-}
+} 
