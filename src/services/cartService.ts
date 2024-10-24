@@ -1,4 +1,4 @@
-import { cartModel, ICart, ICartItem } from "../models/cartModel";
+import { cartModel, ICart ,ICartItem } from "../models/cartModel";
 import productModel from "../models/productModel";
 
 interface CreateCartForUser {
@@ -25,7 +25,19 @@ export const getActiveCartForUser = async ({
   return cart;
 };
 
-interface addItemToCart {
+interface ClearCart{
+    userId: string,
+}
+export const clearCart = async ({ userId }: ClearCart) => {
+    const cart = await getActiveCartForUser({ userId });
+    cart.items = [];
+    cart.totalAmount = 0;
+
+    const updatedCart = await cart.save()
+    return { data: updatedCart, statusCode: 200 };
+}
+
+interface AddItemToCart {
   productId: any;
   quantity: number;
   userId: string;
@@ -35,7 +47,7 @@ export const addItemToCart = async ({
   productId,
   quantity,
   userId,
-}: addItemToCart) => {
+}: AddItemToCart) => {
   const cart = await getActiveCartForUser({ userId });
 
   //does the item exist in the cart
@@ -70,7 +82,7 @@ export const addItemToCart = async ({
   return { data: updatedCart, statusCode: 200 };
 };
 
-interface updateItemInCart {
+interface UpdateItemInCart {
   productId: any;
   quantity: number;
   userId: string;
@@ -80,7 +92,7 @@ export const updateItemInCart = async ({
   productId,
   quantity,
   userId,
-}: updateItemInCart) => {
+}: UpdateItemInCart) => {
   const cart = await getActiveCartForUser({ userId });
   const existsInCart = cart.items.find(
     (p) => p.product.toString() === productId
@@ -116,7 +128,7 @@ total += existsInCart.quantity * existsInCart.unitPrice;
   return { data: updatedCart, statusCode: 200 };
 };
 
-interface deleteItemInCart {
+interface DeleteItemInCart {
   productId: any;
   userId: string;
 }
@@ -124,7 +136,7 @@ interface deleteItemInCart {
 export const deleteItemInCart = async ({
   userId,
   productId,
-}: deleteItemInCart) => {
+}: DeleteItemInCart) => {
   const cart = await getActiveCartForUser({ userId });
   const existsInCart = cart.items.find(
     (p) => p.product.toString() === productId
@@ -150,7 +162,6 @@ const calculateCartTotalItems = ({
   cartItems,
 }: {
   cartItems: ICartItem[];
-
 }) => {
   let total = cartItems.reduce((sum, product) => {
     sum += product.quantity * product.unitPrice;
