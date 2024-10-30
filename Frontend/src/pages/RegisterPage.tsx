@@ -1,6 +1,7 @@
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import { useRef, useState } from "react";
 import { BASE_URL } from "../constants/baseUrl";
+import { useAuth } from "../context/Auth/AuthContext";
 
 const RegisterPage = () => {
     const [error, setError] = useState("")
@@ -9,15 +10,21 @@ const lastNameRef = useRef<HTMLInputElement>(null);
 const emailRef = useRef<HTMLInputElement>(null);
 const passwordRef = useRef<HTMLInputElement>(null); 
 
+const { login } = useAuth()
+
+
 const onSubmit = async () => { 
 const firstName = firstNameref.current?.value;
     const lastName = lastNameRef.current?.value;
     const email = emailRef.current?.value;
     const password = passwordRef.current?.value;  
 
-
-    console.log(name, email, password)
-
+    //validation ll form validation tnsech y huba 
+if (!firstName || !lastName || !email || !password){
+  //hhhhh tnsech tbdl message error 9bal deployment 
+  setError("chuf submitted data y ghali");
+  return; 
+}
     //make call to Api to create the user 
 const response = await fetch(`${BASE_URL}/user/register`, {
     method: "POST",
@@ -30,8 +37,14 @@ if (!response.ok){
 }
 
 
-const data = await response.json();
-console.log(data);  // you can do whatever you want with the response
+const token = await response.json();
+
+if (!token){
+  setError("incorrect token");
+  return;
+};
+
+login(email, token);
 };
   return (
     <Container>
@@ -60,4 +73,4 @@ console.log(data);  // you can do whatever you want with the response
   );
 }; 
 
-export default RegisterPage;
+export default RegisterPage;        
