@@ -11,6 +11,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useAuth } from '../context/Auth/AuthContext';
+import { Grid2 } from '@mui/material';
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -26,7 +27,7 @@ function Navbar() {
     setAnchorElUser(null);
   };
 
-console.log('from nav bar', { username, token });
+
 
   return (
     <AppBar position="static">
@@ -48,7 +49,7 @@ console.log('from nav bar', { username, token });
               textDecoration: 'none',
             }}
           >
-            LOGO
+            Tech hub
           </Typography>
 
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -70,9 +71,16 @@ console.log('from nav bar', { username, token });
         
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              <Grid2 container alignItems="center" justifyContent="center" gap={2}>
+              <Grid2 item >
+              <Typography>{username}</Typography>
+              </Grid2>
+             <Grid2 item>
+             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt={username || ''} src="/static/images/avatar/2.jpg" />
               </IconButton>
+             </Grid2>
+              </Grid2>
             </Tooltip>
             <Menu
               sx={{ mt: '45px' }}

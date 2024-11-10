@@ -2,6 +2,7 @@ import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import { useRef, useState } from "react";
 import { BASE_URL } from "../constants/baseUrl";
 import { useAuth } from "../context/Auth/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
     const [error, setError] = useState("")
@@ -10,6 +11,7 @@ const lastNameRef = useRef<HTMLInputElement>(null);
 const emailRef = useRef<HTMLInputElement>(null);
 const passwordRef = useRef<HTMLInputElement>(null); 
 
+    const navigate = useNavigate()  //useNavigate hook to navigate to different routes
 const { login } = useAuth()
 
 
@@ -45,6 +47,7 @@ if (!token){
 };
 
 login(email, token);
+navigate("/");  //navigate to login page after registration successful
 };
   return (
     <Container>
