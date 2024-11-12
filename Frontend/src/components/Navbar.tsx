@@ -15,7 +15,7 @@ import { Button, Grid2 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 function Navbar() {
-  const { username, isAuthenticated } = useAuth();
+  const { username, isAuthenticated, logout } = useAuth();
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
 const navigate = useNavigate()
@@ -31,6 +31,12 @@ const navigate = useNavigate()
   const handleLogin = () => {          
 navigate("/login");
   };
+
+  const handlelogout = () => {
+ logout();
+ navigate("/");
+ handleCloseUserMenu();
+  }
 
   return (
     <AppBar position="static">
@@ -109,7 +115,7 @@ navigate("/login");
                       My Orders
                     </Typography>
                   </MenuItem>
-                  <MenuItem onClick={handleCloseUserMenu}>
+                  <MenuItem onClick={handlelogout}>
                     <Typography sx={{ textAlign: "center" }}>Logout</Typography>
                   </MenuItem>
                 </Menu>

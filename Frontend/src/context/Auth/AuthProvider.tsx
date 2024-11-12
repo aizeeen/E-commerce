@@ -24,6 +24,8 @@ const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   const logout = () => {
     localStorage.removeItem(USERNAME_KEY);
     localStorage.removeItem(TOKEN_KEY);
+    setUsername(null);
+    setToken(null);
   };
 
   return (
