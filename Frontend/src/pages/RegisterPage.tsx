@@ -4,6 +4,7 @@ import { BASE_URL } from "../constants/baseUrl";
 import { useAuth } from "../context/Auth/AuthContext";
 import { useNavigate } from "react-router-dom";
 
+
 const RegisterPage = () => {
     const [error, setError] = useState("")
     const firstNameref = useRef<HTMLInputElement>(null);
