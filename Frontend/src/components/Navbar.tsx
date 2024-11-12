@@ -12,12 +12,13 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useAuth } from "../context/Auth/AuthContext";
 import { Button, Grid2 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
   const { username, isAuthenticated } = useAuth();
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+
+const navigate = useNavigate()
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -25,6 +26,10 @@ function Navbar() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleLogin = () => {          
+navigate("/login");
   };
 
   return (
@@ -47,7 +52,7 @@ function Navbar() {
               textDecoration: "none",
             }}
           >
-            Tech hub
+            Tech Hub
           </Typography>
 
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
@@ -66,9 +71,9 @@ function Navbar() {
             Tech Hub
           </Typography>
 
-          
-          <Box sx={{ flexGrow: 0 }}>
-          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ flexGrow: 1 }} /> {/* This adds flexible space to push the next box to the right */}
+
+          <Box sx={{ ml: 'auto' }}>
             {isAuthenticated ? (
               <>
                 <Tooltip title="Open settings">
@@ -110,7 +115,7 @@ function Navbar() {
                 </Menu>
               </>
             ) : (
-              <Button variant="outlined" color="secondary"> Login</Button>
+              <Button variant="contained" color="success" onClick={handleLogin}> Login</Button>
             )}
           </Box>
         </Toolbar>
