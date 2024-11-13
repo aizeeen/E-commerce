@@ -10,7 +10,7 @@ import cors from "cors";
 dotenv.config();
 
 const app = express();
-const port = 3001;
+const port = 3001; 
 
 app.use(express.json());
 app.use(cors());
