@@ -29,12 +29,13 @@ const CartProvider: FC<PropsWithChildren> = ({ children }) => {
       const cart = await response.json();
 
       const cartItemsMapped = cart.items.map(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    
         ({
           product,
           quantity,
           unitPrice,
         }: {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           product: any;
           quantity: number;
           unitPrice: number;
@@ -96,6 +97,7 @@ const CartProvider: FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
+
   const updateItemInCart = async (productId: string, quantity: number) => {
     try {
       const response = await fetch(`${BASE_URL}/cart/items`, {
@@ -121,12 +123,14 @@ const CartProvider: FC<PropsWithChildren> = ({ children }) => {
       }
 
       const cartItemsMapped = cart.items.map(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+       
         ({
           product,
           quantity,
           unitPrice,
         }: {
+          
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           product: any;
           quantity: number;
           unitPrice: number;
@@ -166,12 +170,13 @@ const CartProvider: FC<PropsWithChildren> = ({ children }) => {
       }
 
       const cartItemsMapped = cart.items.map(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+       
         ({
           product,
           quantity,
           unitPrice,
         }: {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           product: any;
           quantity: number;
           unitPrice: number;
