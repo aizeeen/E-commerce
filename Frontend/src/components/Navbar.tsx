@@ -1,3 +1,4 @@
+
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -10,15 +11,19 @@ import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import ShoppingCart from "@mui/icons-material/ShoppingCart";
 import { useAuth } from "../context/Auth/AuthContext";
-import { Button, Grid2 } from "@mui/material";
+import { Badge, Button, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+
 
 function Navbar() {
   const { username, isAuthenticated, logout } = useAuth();
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
+    null
+  );
 
-const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -28,101 +33,129 @@ const navigate = useNavigate()
     setAnchorElUser(null);
   };
 
-  const handleLogin = () => {          
-navigate("/login");
+  const handleLogin = () => {
+    navigate("/login");
   };
 
-  const handlelogout = () => {
- logout();
- navigate("/");
- handleCloseUserMenu();
-  }
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+    handleCloseUserMenu();
+  };
+
+  const handleCart = () => {
+    navigate("/cart");
+  };
 
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
+          <Box
             sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              width: "100%",
             }}
           >
-            Tech Hub
-          </Typography>
-
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-            }}
-          >
-            Tech Hub
-          </Typography>
-
-          <Box sx={{ flexGrow: 1 }} /> {/* This adds flexible space to push the next box to the right */}
-
-          <Box sx={{ ml: 'auto' }}>
-            {isAuthenticated ? (
-              <>
-                <Tooltip title="Open settings">
-                  <Grid2 container alignItems="center" gap={1}>
-                    <Typography>{username}</Typography>
-
-                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                      <Avatar
-                        alt={username || ""}
-                        src="/static/images/avatar/2.jpg"
-                      />
-                    </IconButton>
-                  </Grid2>
-                </Tooltip>
-                <Menu
-                  sx={{ mt: "45px" }}
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
+            <Button
+              variant="text"
+              sx={{ color: "#fff" }}
+              onClick={() => navigate("/")}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <AdbIcon sx={{ display: "flex", mr: 1 }} />
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="a"
+                  sx={{
+                    mr: 2,
+                    display: { xs: "none", md: "flex" },
+                    fontFamily: "monospace",
+                    fontWeight: 700,
                   }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
                 >
-                  <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography sx={{ textAlign: "center" }}>
-                      My Orders
-                    </Typography>
-                  </MenuItem>
-                  <MenuItem onClick={handlelogout}>
-                    <Typography sx={{ textAlign: "center" }}>Logout</Typography>
-                  </MenuItem>
-                </Menu>
-              </>
-            ) : (
-              <Button variant="contained" color="success" onClick={handleLogin}> Login</Button>
-            )}
+                  Tech Hub
+                </Typography>
+              </Box>
+            </Button>
+            <Box
+              gap={4}
+              display="flex"
+              flexDirection="row"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <IconButton aria-label="cart" onClick={handleCart}>
+                <Badge badgeContent={4} color="secondary">
+                  <ShoppingCart sx={{ color: "#ffffff" }} />
+                </Badge>
+              </IconButton>
+              {isAuthenticated ? (
+                <>
+                  <Tooltip title="Open settings">
+                    <Grid
+                      container
+                      alignItems="center"
+                      justifyContent="center"
+                      gap={2}
+                    >
+                      <Grid item>
+                        <Typography>{username}</Typography>
+                      </Grid>
+                      <Grid item>
+                        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                          <Avatar
+                            alt={username || ""}
+                            src="/static/images/avatar/2.jpg"
+                          />
+                        </IconButton>
+                      </Grid>
+                    </Grid>
+                  </Tooltip>
+                  <Menu
+                    sx={{ mt: "45px" }}
+                    id="menu-appbar"
+                    anchorEl={anchorElUser}
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    open={Boolean(anchorElUser)}
+                    onClose={handleCloseUserMenu}
+                  >
+                    <MenuItem onClick={handleCloseUserMenu}>
+                      <Typography textAlign="center">My Orders</Typography>
+                    </MenuItem>
+                    <MenuItem onClick={handleLogout}>
+                      <Typography textAlign="center">Logout</Typography>
+                    </MenuItem>
+                  </Menu>
+                </>
+              ) : (
+                <Button
+                  variant="contained"
+                  color="success"
+                  onClick={handleLogin}
+                >
+                  Login
+                </Button>
+              )}
+            </Box>
           </Box>
         </Toolbar>
       </Container>
