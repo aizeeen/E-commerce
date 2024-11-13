@@ -54,7 +54,7 @@ const LoginPage = () => {
           alignItems: "center",
           mt: 4,
         }}
-      >
+      > 
         <Typography variant="h6">Login to your account</Typography>
         <Box
           sx={{
